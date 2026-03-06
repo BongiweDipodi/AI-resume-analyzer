@@ -1,106 +1,74 @@
+# README.md
+
 # AI Resume Analyzer
 
 ## Project Overview
 
-AI Resume Analyzer is a Python application that analyzes a candidate's resume and compares it to a job description to determine how well the resume matches the job requirements.
-
-The system extracts skills from the resume using Natural Language Processing (NLP) and compares them to the required skills in the job description.
-
-It then generates:
-
-- Resume Match Score
-- Matched Skills
-- Missing Skills
-- Resume Improvement Suggestions
-
-The application is built using Streamlit to create an interactive web interface.
-
----
-
-## Tech Stack
-
-Python
-
-Streamlit – User interface
-
-spaCy – Natural language processing
-
-pdfplumber – PDF text extraction
-
-python-docx – Word document parsing
-
-scikit-learn – similarity calculations
-
----
+AI Resume Analyzer is an open-source tool designed to help job seekers evaluate how well their resumes match a specific job description. The system uses Natural Language Processing to extract skills from both the resume and job posting and produces a match score along with actionable suggestions.
 
 ## Features
 
-Resume Upload (PDF or DOCX)
+* Resume parsing for **PDF and DOCX**
+* NLP-based skill extraction using **spaCy**
+* Job description analysis
+* Resume-job **match scoring**
+* Skill gap analysis
+* Resume improvement suggestions
 
-Automatic Resume Text Extraction
+## Technology Stack
 
-Skill Extraction using NLP
+Frontend / Backend
 
-Job Description Analysis
+* Streamlit
 
-Resume-Job Skill Matching
+NLP
 
-Match Score Calculation
+* spaCy
 
-Resume Feedback Generator
+File Parsing
 
-Interactive Results Dashboard
+* pdfplumber
+* python-docx
 
----
+Utilities
 
-## Project Structure
-
-app.py → Streamlit application
-
-utils/ → File parsing and text cleaning
-
-models/ → AI processing logic
-
-data/ → Skills dataset
-
-docs/ → task guides for developers
-
-tests/ → test scripts
-
----
+* scikit-learn (optional similarity analysis)
 
 ## Installation
 
-Clone the repository
+Clone repository
+
+```
+git clone https://github.com/your-username/ai-resume-analyzer.git
+cd ai-resume-analyzer
+```
 
 Install dependencies
 
+```
 pip install -r requirements.txt
+```
 
-Run the application
+Install spaCy model
 
+```
+python -m spacy download en_core_web_sm
+```
+
+Run the app
+
+```
 streamlit run app.py
+```
 
----
+## Usage
 
-## Example Workflow
-
-1 Upload resume
-
-2 Paste job description
-
-3 Click analyze
-
-4 System extracts skills
-
-5 Resume compared to job requirements
-
-6 Match score and suggestions displayed
-
----
+1. Upload resume (PDF or DOCX)
+2. Paste job description
+3. Click **Analyze Match**
+4. View match score and improvement suggestions
 
 ## Contributors
 
-Bongiwe Dipodi
-
-Mosa Dondolo
+Mosa Stabby — Resume Processing Pipeline
+Bongiwe Dipodi — Matching Engine & UI
