@@ -39,7 +39,7 @@ Utilities
 Clone repository
 
 ```
-git clone https://github.com/your-username/ai-resume-analyzer.git
+git clone https://github.com/BongiweDipodi/ai-resume-analyzer.git
 cd ai-resume-analyzer
 ```
 
