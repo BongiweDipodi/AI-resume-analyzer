@@ -70,5 +70,5 @@ streamlit run app.py
 
 ## Contributors
 
-Mosa Stabby — Resume Processing Pipeline
-Bongiwe Dipodi — Matching Engine & UI
+- Mosa Dondolo — Resume Processing Pipeline
+- Bongiwe Dipodi — Matching Engine & UI
