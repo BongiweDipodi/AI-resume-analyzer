@@ -1,0 +1,54 @@
+# --- Python Specific ---
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+*.so
+
+# --- Environments ---
+.env
+.venv
+env/
+venv/
+ENV/
+bin/
+lib/
+develop-eggs/
+dist/
+build/
+
+# --- Streamlit Specific ---
+.streamlit/secrets.toml
+.streamlit/config.toml
+# If you don't want to track Streamlit's local state/cache
+.streamlit/static/
+
+# --- AI & NLP Models ---
+# Large models (spacy, transformers, etc.) should be downloaded via script, not tracked
+models/
+*.bin
+*.pt
+*.pth
+*.pkl
+*.h5
+*.joblib
+# Specific spaCy models if you download them into a local dir
+en_core_web_sm/
+
+# --- Project Specific (Resumes & Data) ---
+# Don't commit user resumes or extracted data
+uploads/
+data/processed/
+data/raw/
+*.pdf
+*.docx
+*.csv
+*.xlsx
+
+# --- OS & IDE Specific ---
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.log
+docs/*
