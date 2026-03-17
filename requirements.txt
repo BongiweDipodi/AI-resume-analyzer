@@ -1,0 +1,18 @@
+# Web Framework
+streamlit
+
+# Natural Language Processing
+spacy>=3.0.0
+# Direct link to the model to automate installation
+#https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
+
+# File Parsing
+pdfplumber
+python-docx
+
+# Data Handling & Analysis
+pandas
+scikit-learn
+
+# Utilities
+python-dotenv
