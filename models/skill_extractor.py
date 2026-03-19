@@ -2,31 +2,28 @@ import spacy
 
 nlp = spacy.load("en_core_web_sm")
 
-def process_job_description(jd_text: str):
+def extract_job_skills(job_description: str) -> list:
     """
-    Task 1: Processes raw job description text into a list of 
-    cleaned, meaningful keywords.
+    Extracts meaningful keywords from a job description.
+    Returns a list of skills/keywords.
     """
-    doc = nlp(jd_text) 
-    
+    doc = nlp(job_description)
     keywords = []
+
     for token in doc:
-        # 1. Skip stop words and punctuation
         if token.is_stop or token.is_punct:
             continue
-            
-        # 2. Handle Proper Nouns (like AWS, Python, SQL) - Keep exact text
+
+        # Proper nouns (technologies)
         if token.pos_ == "PROPN":
             keywords.append(token.text.lower())
-            
-        # 3. Handle regular Nouns (like developer, experience) - Use lemma
-        elif token.pos_ == "NOUN":
+        # Nouns, adjectives, verbs
+        elif token.pos_ in ["NOUN", "ADJ", "VERB"]:
             keywords.append(token.lemma_.lower())
-            
 
     return sorted(list(set(keywords)))
 
+# Example usage
 if __name__ == "__main__":
-    sample_jd = "I am a Java developer with experience in AWS and SQL."
-    result = process_job_description(sample_jd)
-    print(f"Extracted Keywords: {result}")
+    jd = "Python developer with AWS, SQL, and cloud computing experience."
+    print(extract_job_skills(jd))
