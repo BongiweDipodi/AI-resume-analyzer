@@ -13,3 +13,20 @@ def clean_job_description(text: str) -> str:
     text = text.strip()
     return text
 
+def clean_resume_text(text: str) -> str:
+    """
+    Clean and normalize resume text
+
+    Args: text (str): Raw resume text
+
+    Returns: Cleaned text (str)
+    """
+
+    text = text.lower()
+    # Remove extra whitespace
+    text = re.sub(r"\s+", " ", text)
+    # Remove speacial characters
+    text = re.sub(r"[^a-zA-Z0-9\s\.\,\-\:]", "", text)
+    text = text.strip()
+
+    return text
