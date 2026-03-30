@@ -30,3 +30,11 @@ def clean_resume_text(text: str) -> str:
     text = text.strip()
 
     return text
+
+# ── Quick test ──
+_raw = "Python, SQL,  Data Analysis!!! | Node.js & Docker  "
+_cleaned = clean_resume_text(_raw)
+# print("[Task 1 - text_cleaner]")
+# print("Input :", _raw)
+# print("Output:", _cleaned)
+# Expected → "python sql data analysis node js docker"
