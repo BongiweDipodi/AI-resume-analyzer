@@ -29,8 +29,8 @@ if __name__ == "__main__":
     print(extract_job_skills(jd))
 
 
-    import json, os, re
-    from utils.text_cleaner import clean_resume_text
+import json, os, re
+from utils.text_cleaner import clean_resume_text
 
 # In the real project this loads from data/skills_list.json
 # For testing, we define a small inline dictionary
