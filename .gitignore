@@ -25,7 +25,6 @@ build/
 
 # --- AI & NLP Models ---
 # Large models (spacy, transformers, etc.) should be downloaded via script, not tracked
-models/
 *.bin
 *.pt
 *.pth
@@ -51,4 +50,6 @@ data/raw/
 .vscode/
 *.swp
 *.log
-docs/*
+
+# --- Docs (local notes only, not for repo) ---
+docs/
