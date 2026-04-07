@@ -32,8 +32,8 @@ def vectorize_skills(skill_list: list, vocabulary: list = None) -> list:
 _vocab     = ["python", "sql", "ml", "docker", "git"]
 _candidate = ["python", "ml", "git"]
 _vector    = vectorize_skills(_candidate, vocabulary=_vocab)
-print("\n[Task 6 - vectorizer]")
-print("Vocabulary:", _vocab)
-print("Candidate :", _candidate)
-print("Vector    :", _vector)
+# print("\n[Task 6 - vectorizer]")
+# print("Vocabulary:", _vocab)
+# print("Candidate :", _candidate)
+# print("Vector    :", _vector)
 # Expected → [1, 0, 1, 0, 1]
