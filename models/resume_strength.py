@@ -58,11 +58,12 @@ def analyze_resume_strength(resume_text: str) -> dict:
     feedback.append(f"Education level detected: {edu}.")
 
     # Projects (10 pts)
-    proj_count = len(re.findall(r"\bproject\b", resume_text.lower()))
-    if proj_count >= 2:
+    # Count actual project entries (lines with em-dashes or similar separators)
+    project_entries = len(re.findall(r"—|–", resume_text))  # Count em-dashes or en-dashes
+    if project_entries >= 2:
         score += 10
         feedback.append("Multiple projects found - great for showcasing work.")
-    elif proj_count == 1:
+    elif project_entries >= 1:
         score += 5
         feedback.append("Consider adding more projects to your resume.")
     else:
@@ -86,9 +87,9 @@ PROJECTS
 Resume Analyzer — Streamlit + Python
 Data Dashboard — Pandas + Plotly
 """
-# _strength = analyze_resume_strength(_strength_resume)
-# print("\n[Task 10 - resume_strength]")
-# print("Strength Score:", _strength["strength_score"])
-# print("Feedback:")
-# for tip in _strength["feedback"]:
-#     print(" •", tip)
+_strength = analyze_resume_strength(_strength_resume)
+print("\n[Task 10 - resume_strength]")
+print("Strength Score:", _strength["strength_score"])
+print("Feedback:")
+for tip in _strength["feedback"]:
+    print(" •", tip)
