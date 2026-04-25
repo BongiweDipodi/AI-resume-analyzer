@@ -87,9 +87,9 @@ PROJECTS
 Resume Analyzer — Streamlit + Python
 Data Dashboard — Pandas + Plotly
 """
-_strength = analyze_resume_strength(_strength_resume)
-print("\n[Task 10 - resume_strength]")
-print("Strength Score:", _strength["strength_score"])
-print("Feedback:")
-for tip in _strength["feedback"]:
-    print(" •", tip)
+# _strength = analyze_resume_strength(_strength_resume)
+# print("\n[Task 10 - resume_strength]")
+# print("Strength Score:", _strength["strength_score"])
+# print("Feedback:")
+# for tip in _strength["feedback"]:
+#     print(" •", tip)
