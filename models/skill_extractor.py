@@ -1,4 +1,6 @@
 import spacy
+import json, os, re
+from utils.text_cleaner import clean_resume_text
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -24,13 +26,11 @@ def extract_job_skills(job_description: str) -> list:
     return sorted(list(set(keywords)))
 
 # Example usage
-if __name__ == "__main__":
-    jd = "Python developer with AWS, SQL, and cloud computing experience."
-    print(extract_job_skills(jd))
+# if __name__ == "__main__":
+#     jd = "Python developer with AWS, SQL, and cloud computing experience."
+#     print(extract_job_skills(jd))
 
 
-import json, os, re
-from utils.text_cleaner import clean_resume_text
 
 # In the real project this loads from data/skills_list.json
 # For testing, we define a small inline dictionary
@@ -65,7 +65,7 @@ def extract_resume_skills(resume_text: str, skill_dict: set = _SKILL_DICT) -> li
 
 # ── Quick test ──
 _skill_input = "Experienced in Python, SQL, Machine Learning, Docker and Git."
-_skills_found = extract_resume_skills(_skill_input)
+# _skills_found = extract_resume_skills(_skill_input)
 # print("\n[Task 3 - skill_extractor]")
 # print("Input :", _skill_input)
 # print("Skills:", _skills_found)
