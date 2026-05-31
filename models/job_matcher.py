@@ -1,3 +1,23 @@
+from utils.text_cleaner import clean_resume_text
+from models.skill_extractor import extract_job_skills as extract_skills
+
+
+def extract_job_skills(job_description: str) -> list:
+    """
+    Extract skills from a job description.
+    
+    Args:
+        job_description (str): Raw job description text
+    
+    Returns:
+        list: Skills extracted from the job description
+    """
+    cleaned_jd = clean_resume_text(job_description)
+    job_skills = extract_skills(cleaned_jd)
+    
+    return job_skills
+
+
 def match_resume_to_job(resume_skills: list, job_skills: list) -> dict:
     """
     Compares resume skills with job skills.
