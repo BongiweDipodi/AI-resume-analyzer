@@ -35,6 +35,32 @@ def match_resume_to_job(resume_skills: list, job_skills: list) -> dict:
     }
 
 
+def remove_duplicate_skills(skills: list) -> list:
+    """
+    Ensure skills list contains unique values.
+    
+    Args:
+        skills (list): List of skills that may contain duplicates
+    
+    Returns:
+        list: List of unique skills
+    """
+    return list(set(skills))
+
+
+def sort_skills(skills: list) -> list:
+    """
+    Sort skills alphabetically.
+    
+    Args:
+        skills (list): List of skills to sort
+    
+    Returns:
+        list: Sorted skills in alphabetical order
+    """
+    return sorted(skills)
+
+
 if __name__ == "__main__":
     resume = ["Python", "Java", "AWS"]
     job = ["Python", "AWS", "SQL", "Cloud"]
