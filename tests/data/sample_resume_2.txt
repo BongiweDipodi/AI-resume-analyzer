@@ -1,0 +1,15 @@
+JOHN DOE — Backend Developer
+
+EDUCATION
+Bachelor of Technology in Computer Science | 2018-2022
+
+WORK EXPERIENCE
+Junior Developer | StartupX | 2021-2024
+- REST APIs with FastAPI and PostgreSQL
+- 3 years experience with Python and Git
+
+TECHNICAL SKILLS
+Python, Java, Git, Flask, SQL
+
+PROJECTS
+Inventory API — FastAPI + SQL

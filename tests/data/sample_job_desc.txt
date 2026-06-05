@@ -1,0 +1,5 @@
+Senior Data Scientist
+
+We are looking for a Python developer with AWS, SQL, Docker, and machine learning experience.
+Strong background in data analysis, cloud computing, and building production ML systems.
+Minimum 3 years of professional experience required.
