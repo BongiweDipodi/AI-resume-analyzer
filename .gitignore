@@ -51,5 +51,9 @@ data/raw/
 *.swp
 *.log
 
-# --- Docs (local notes only, not for repo) ---
-docs/
+# --- Coverage / tooling ---
+.coverage
+htmlcov/
+coverage.xml
+.mypy_cache/
+.pytest_cache/
