@@ -1,0 +1,17 @@
+JANE SMITH — Data Scientist
+
+EDUCATION
+Master of Science in Data Science, Wits University | 2020-2022
+BSc Computer Science, Unisa | 2016-2019
+
+WORK EXPERIENCE
+Data Analyst | FinTech Co | 2022 - Present
+- Built ML pipelines with Python, SQL, and Docker
+- 4 years of experience with machine learning and data analysis
+
+TECHNICAL SKILLS
+Python, SQL, Machine Learning, Docker, Git, AWS, Pandas
+
+PROJECTS
+Customer Churn Model — Python + scikit-learn
+Sales Dashboard — Pandas + Streamlit
