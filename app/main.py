@@ -183,6 +183,48 @@ def tab_single_match() -> None:
             st.error(str(exc))
             return
 
+    result = st.session_state.last_match_result
+    if not result:
+        st.info("Upload a resume and job description, then click Analyze.")
+        return
+
+    score = result["match_score"]
+    st.metric(
+        "Match Score", f"{score}%", help="Percentage of job skills found on resume"
+    )
+    st.progress(min(score / 100.0, 1.0))
+    if score > 90:
+        st.balloons()
+        st.success("Excellent match! You are a top candidate for this role.")
+    elif score >= 70:
+        st.info("Solid match — consider addressing missing skills below.")
+    else:
+        st.warning("Low match — focus on the missing skills and ATS tips.")
+
+    _skills_chart(result["matched_skills"], result["missing_skills"])
+
+    with st.expander("Detected skills"):
+        st.dataframe(
+            pd.DataFrame({"skill": result["resume_skills"]}),
+            use_container_width=True,
+        )
+    with st.expander("Education & experience"):
+        st.write(f"**Education:** {result['education']}")
+        st.write(f"**Experience:** ~{result['experience_years']} year(s)")
+    with st.expander("Resume strength & ATS"):
+        st.write(f"**ATS simulation score:** {result['ats_score']}%")
+        bench = result["industry_benchmark"]
+        st.write(
+            f"**Industry benchmark:** {bench['percentile_label']} "
+            f"(benchmark {bench['benchmark_score']}%)"
+        )
+        for tip in result["feedback"]:
+            st.markdown(f"- {tip}")
+        st.markdown("**Keyword suggestions**")
+        for kw in result["keyword_suggestions"]:
+            st.markdown(f"- {kw}")
+    with st.expander("Cover letter draft"):
+        st.text_area("Draft", result["cover_letter_draft"], height=200)
 
 
 
