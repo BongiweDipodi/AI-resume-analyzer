@@ -300,7 +300,69 @@ def tab_compare() -> None:
             st.error(str(exc))
 
 
+def _score_resume_batch(args: tuple) -> tuple:
+    name, text, job_text = args
+    engine = MatchEngine()
+    result = engine.match_resume_to_job(text, job_text)
+    return name, result["match_score"]
 
+
+def tab_batch() -> None:
+    st.header("Batch Ranking")
+    files = st.file_uploader(
+        "Upload resumes (multiple files or ZIP)",
+        type=["pdf", "docx", "zip"],
+        accept_multiple_files=True,
+    )
+    job_text = st.text_area("Job description", height=150, key="batch_job")
+    if st.button("Rank candidates", type="primary"):
+        if not files or not job_text.strip():
+            st.error("Provide resumes and a job description.")
+            return
+        job_clean = sanitize_text(job_text)
+        payloads: List[tuple] = []
+        progress = st.progress(0.0)
+        try:
+            for uploaded in files:
+                if uploaded.name.lower().endswith(".zip"):
+                    zf = zipfile.ZipFile(io.BytesIO(uploaded.getvalue()))
+                    for name in zf.namelist():
+                        if name.lower().endswith((".pdf", ".docx")):
+                            text = parse_uploaded_file(zf.read(name), name)
+                            payloads.append((name, sanitize_text(text), job_clean))
+                else:
+                    text = sanitize_text(_read_upload(uploaded))
+                    payloads.append((uploaded.name, text, job_clean))
+        except InvalidFileError as exc:
+            st.error(str(exc))
+            return
+
+        if not payloads:
+            st.warning("No valid resumes found in upload.")
+            return
+
+        scores: Dict[str, float] = {}
+        if len(payloads) > 5:
+            with ProcessPoolExecutor(max_workers=MAX_BATCH_WORKERS) as pool:
+                for i, (name, score) in enumerate(
+                    pool.map(_score_resume_batch, payloads), start=1
+                ):
+                    scores[name] = score
+                    progress.progress(i / len(payloads))
+        else:
+            engine = get_engine()
+            for i, (name, text, job) in enumerate(payloads, start=1):
+                scores[name] = engine.match_resume_to_job(text, job)["match_score"]
+                progress.progress(i / len(payloads))
+
+        ranking = get_engine().rank_resumes(scores)
+        df = pd.DataFrame(ranking)
+        st.dataframe(df, use_container_width=True)
+        if ranking:
+            top = ranking[0]
+            st.success(
+                f"Top candidate: **{top['candidate']}** with {top['score']}% match"
+            )
 
 
 def main() -> None:
