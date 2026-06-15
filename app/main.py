@@ -272,6 +272,35 @@ def tab_strength() -> None:
     )
 
 
+def tab_compare() -> None:
+    st.header("Resume Comparison")
+    col1, col2 = st.columns(2)
+    with col1:
+        f1 = st.file_uploader("Resume A", type=["pdf", "docx"], key="cmp_a")
+    with col2:
+        f2 = st.file_uploader("Resume B", type=["pdf", "docx"], key="cmp_b")
+    if st.button("Compare resumes"):
+        if not f1 or not f2:
+            st.error("Upload both resumes.")
+            return
+        try:
+            t1 = sanitize_text(_read_upload(f1))
+            t2 = sanitize_text(_read_upload(f2))
+            sim = cached_similarity(t1, t2)
+            st.metric("Similarity", f"{sim:.2%}")
+            table = pd.DataFrame(
+                {
+                    "Resume A": [len(t1.split()), len(set(t1.split()))],
+                    "Resume B": [len(t2.split()), len(set(t2.split()))],
+                },
+                index=["Word count", "Unique words"],
+            )
+            st.dataframe(table, use_container_width=True)
+        except InvalidFileError as exc:
+            st.error(str(exc))
+
+
+
 
 
 def main() -> None:
