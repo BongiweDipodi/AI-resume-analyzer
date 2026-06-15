@@ -60,6 +60,23 @@ def _read_upload(uploaded_file) -> str:
     return parse_uploaded_file(data, uploaded_file.name)
 
 
+@st.cache_data(show_spinner=False)
+def cached_match(resume_text: str, job_text: str) -> Dict[str, Any]:
+    """Cached full match analysis."""
+    return get_engine().match_resume_to_job(resume_text, job_text)
+
+
+@st.cache_data(show_spinner=False)
+def cached_strength(resume_text: str) -> Dict[str, Any]:
+    """Cached strength analysis."""
+    return get_engine().analyze_strength(resume_text)
+
+
+@st.cache_data(show_spinner=False)
+def cached_similarity(text_a: str, text_b: str) -> float:
+    """Cached resume similarity."""
+    return get_engine().compare_resumes(text_a, text_b)
+
 
 
 def main() -> None:
