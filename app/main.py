@@ -145,6 +145,46 @@ def _render_sidebar() -> None:
         st.caption(f"Session requests: {st.session_state.request_count}/{RATE_LIMIT}")
 
 
+def tab_single_match() -> None:
+    st.header("Single Resume Analysis")
+    resume_file = st.file_uploader(
+        "Upload resume (PDF/DOCX)",
+        type=["pdf", "docx"],
+        key="single_resume",
+    )
+    job_text = st.text_area(
+        "Job description",
+        height=180,
+        placeholder="Paste the job description here...",
+    )
+    if st.button("Analyze", type="primary", use_container_width=True):
+        if not _check_rate_limit():
+            return
+        if not resume_file:
+            st.error("Please upload a resume file.")
+            return
+        if not job_text.strip():
+            st.error("Please paste a job description.")
+            return
+        try:
+            with st.spinner("Analyzing resume against job description..."):
+                resume_text = _read_upload(resume_file)
+                resume_text = sanitize_text(resume_text)
+                job_clean = sanitize_text(job_text)
+                result = cached_match(resume_text, job_clean)
+                st.session_state.last_match_result = result
+                st.session_state.last_resume_text = resume_text
+                st.session_state.last_job_text = job_clean
+        except (
+            InvalidFileError,
+            InvalidResumeError,
+            InvalidJobDescriptionError,
+        ) as exc:
+            st.error(str(exc))
+            return
+
+
+
 
 def main() -> None:
     """Run Streamlit application."""
