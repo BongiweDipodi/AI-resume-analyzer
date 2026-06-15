@@ -32,6 +32,20 @@ def get_engine() -> MatchEngine:
     return MatchEngine()
 
 
+def _init_session_state() -> None:
+    defaults = {
+        "theme": "light",
+        "request_count": 0,
+        "last_resume_text": "",
+        "last_job_text": "",
+        "last_match_result": None,
+        "last_strength_result": None,
+    }
+    for key, value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
+
+
 
 
 def main() -> None:
