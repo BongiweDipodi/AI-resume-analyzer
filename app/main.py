@@ -131,6 +131,19 @@ def _pdf_report(title: str, lines: List[str]) -> bytes:
     return bytes(pdf.output())
 
 
+def _render_sidebar() -> None:
+    with st.sidebar:
+        st.title("ResumeMatch AI")
+        theme = st.toggle("Dark mode", value=st.session_state.theme == "dark")
+        st.session_state.theme = "dark" if theme else "light"
+        st.markdown(f"[GitHub Repository]({GITHUB_URL})")
+        with st.expander("About"):
+            st.markdown("""
+                **Tech stack:** Python, Streamlit, spaCy, scikit-learn,
+                pandas, pdfplumber, Plotly, pytest, GitHub Actions
+                """)
+        st.caption(f"Session requests: {st.session_state.request_count}/{RATE_LIMIT}")
+
 
 
 def main() -> None:
