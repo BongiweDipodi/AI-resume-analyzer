@@ -46,6 +46,14 @@ def _init_session_state() -> None:
             st.session_state[key] = value
 
 
+def _check_rate_limit() -> bool:
+    st.session_state.request_count += 1
+    if st.session_state.request_count > RATE_LIMIT:
+        st.error("Session rate limit reached. Please refresh the page.")
+        return False
+    return True
+
+
 
 
 def main() -> None:
