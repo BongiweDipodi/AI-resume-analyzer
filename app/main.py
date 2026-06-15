@@ -78,6 +78,18 @@ def cached_similarity(text_a: str, text_b: str) -> float:
     return get_engine().compare_resumes(text_a, text_b)
 
 
+def _skills_chart(matched: List[str], missing: List[str]) -> None:
+    df = pd.DataFrame(
+        {
+            "Category": ["Matched", "Missing"],
+            "Count": [len(matched), len(missing)],
+        }
+    )
+    st.bar_chart(df.set_index("Category"))
+
+
+
+
 
 def main() -> None:
     """Run Streamlit application."""
