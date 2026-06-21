@@ -17,3 +17,9 @@ class InvalidResumeError(ValueError):
 
 class SkillDictionaryError(Exception):
     """Raised when the skill dictionary fails to load or is invalid."""
+"""Custom exceptions for Resume Match AI."""
+
+
+class ResumeMatchError(Exception):
+    """Base exception for application errors."""
+
