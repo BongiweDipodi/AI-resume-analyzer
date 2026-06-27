@@ -5,7 +5,7 @@ Thank you for your interest in contributing. This project follows production-gra
 ## Development setup
 
 ```bash
-git clone https://github.com/BongiweDipodi/AI-resume-analyzer.git
+git clone https://github.com/dondolo2/AI-resume-analyzer.git
 cd AI-resume-analyzer
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
