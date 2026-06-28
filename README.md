@@ -1,7 +1,7 @@
 # 🎯 ResumeMatch AI
 
-[![CI Pipeline](https://github.com/BongiweDipodi/AI-resume-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/BongiweDipodi/AI-resume-analyzer/actions/workflows/ci.yml)
-[![Codecov](https://codecov.io/gh/BongiweDipodi/AI-resume-analyzer/branch/main/graph/badge.svg)](https://codecov.io/gh/BongiweDipodi/AI-resume-analyzer)
+[![CI Pipeline](https://github.com/dondolo2/AI-resume-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/dondolo2/AI-resume-analyzer/actions/workflows/ci.yml)
+[![Codecov](https://codecov.io/gh/dondolo2/AI-resume-analyzer/branch/main/graph/badge.svg)](https://codecov.io/gh/dondolo2/AI-resume-analyzer)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -59,12 +59,12 @@ Python · Streamlit · FastAPI · spaCy · scikit-learn · pandas · pdfplumber 
 ## 📦 Quick Start
 
 ```bash
-git clone https://github.com/BongiweDipodi/AI-resume-analyzer.git
+git clone https://github.com/dondolo2/AI-resume-analyzer.git
 cd AI-resume-analyzer
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 cp .env.example .env
-streamlit run app/main.py
+streamlit run streamlit_app.py
 ```
 
 API server (optional):
@@ -102,7 +102,7 @@ Coverage is enforced at **≥ 85%** in CI. See the Codecov badge above after con
 **Bongiwe Dipodi** — Matching Engine & UI  
 **Mosa Dondolo** — Resume Processing Pipeline  
 
-| [GitHub](https://github.com/BongiweDipodi) | [Repository](https://github.com/BongiweDipodi/AI-resume-analyzer) |
+| [GitHub](https://github.com/dondolo2) | [Repository](https://github.com/dondolo2/AI-resume-analyzer) |
 
 ## 📄 License
 
