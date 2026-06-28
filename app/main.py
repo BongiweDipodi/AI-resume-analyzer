@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import io
 import zipfile
-from concurrent.futures import ProcessPoolExecutor
 from typing import Any, Dict, List
+import unicodedata
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -21,8 +21,7 @@ from app.services.match_service import MatchEngine
 from app.utils.file_handlers import parse_uploaded_file
 from app.utils.validators import sanitize_text
 
-GITHUB_URL = "https://github.com/BongiweDipodi/AI-resume-analyzer"
-MAX_BATCH_WORKERS = 4
+GITHUB_URL = "https://github.com/dondolo2/AI-resume-analyzer"
 RATE_LIMIT = 50
 
 
@@ -34,7 +33,7 @@ def get_engine() -> MatchEngine:
 
 def _init_session_state() -> None:
     defaults = {
-        "theme": "light",
+        "theme": "dark",
         "request_count": 0,
         "last_resume_text": "",
         "last_job_text": "",
@@ -123,11 +122,36 @@ def _strength_radar(result: Dict[str, Any], resume_text: str) -> None:
 def _pdf_report(title: str, lines: List[str]) -> bytes:
     pdf = FPDF()
     pdf.add_page()
+
+    # Use basic Helvetica by default. Many resumes contain long dashes
+    # and other Unicode characters which Helvetica doesn't support.
+    # We'll normalize common problematic characters (em/en dashes, nbsp)
+    # as a fallback so PDF generation doesn't raise on encode errors.
     pdf.set_font("Helvetica", "B", 16)
-    pdf.cell(0, 10, title, new_x="LMARGIN", new_y="NEXT")
+    # Title may contain safe characters; normalize it defensively too.
+    safe_title = unicodedata.normalize("NFKD", title).replace("\u00A0", " ")
+    safe_title = safe_title.replace("—", "-").replace("–", "-")
+    pdf.cell(0, 10, safe_title, new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", size=11)
+
+    def _sanitize_for_pdf(text: str) -> str:
+        # Normalize and replace common unicode characters that default
+        # PDF fonts don't support (em dash, en dash, non-breaking space).
+        t = unicodedata.normalize("NFKD", text)
+        t = t.replace("\u00A0", " ")
+        t = t.replace("—", "-").replace("–", "-")
+        # If other characters still can't be encoded by the PDF font,
+        # fall back to replacing unencodable bytes with a placeholder.
+        try:
+            t.encode("latin-1")
+            return t
+        except UnicodeEncodeError:
+            return t.encode("latin-1", errors="replace").decode("latin-1")
+
     for line in lines:
-        pdf.multi_cell(0, 8, line)
+        safe_line = _sanitize_for_pdf(line)
+        pdf.multi_cell(0, 8, safe_line)
+
     return bytes(pdf.output())
 
 
@@ -300,13 +324,6 @@ def tab_compare() -> None:
             st.error(str(exc))
 
 
-def _score_resume_batch(args: tuple) -> tuple:
-    name, text, job_text = args
-    engine = MatchEngine()
-    result = engine.match_resume_to_job(text, job_text)
-    return name, result["match_score"]
-
-
 def tab_batch() -> None:
     st.header("Batch Ranking")
     files = st.file_uploader(
@@ -342,18 +359,10 @@ def tab_batch() -> None:
             return
 
         scores: Dict[str, float] = {}
-        if len(payloads) > 5:
-            with ProcessPoolExecutor(max_workers=MAX_BATCH_WORKERS) as pool:
-                for i, (name, score) in enumerate(
-                    pool.map(_score_resume_batch, payloads), start=1
-                ):
-                    scores[name] = score
-                    progress.progress(i / len(payloads))
-        else:
-            engine = get_engine()
-            for i, (name, text, job) in enumerate(payloads, start=1):
-                scores[name] = engine.match_resume_to_job(text, job)["match_score"]
-                progress.progress(i / len(payloads))
+        engine = get_engine()
+        for i, (name, text, job) in enumerate(payloads, start=1):
+            scores[name] = engine.match_resume_to_job(text, job)["match_score"]
+            progress.progress(i / len(payloads))
 
         ranking = get_engine().rank_resumes(scores)
         df = pd.DataFrame(ranking)
